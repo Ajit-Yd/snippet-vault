@@ -1,0 +1,112 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String     @id @default(cuid())
+  email      String     @unique
+  name       String?
+  emailVerified Boolean @default(false)
+  image      String?
+  accounts   Account[]
+  sessions   Session[]
+  snippets   Snippet[]
+  categories Category[]
+  notes      Note[]
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+}
+
+model Account {
+  id              String    @id @default(cuid())
+  userId          String
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accountId       String
+  providerId      String
+  accessToken     String?
+  refreshToken    String?
+  accessTokenExpiresAt DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope           String?
+  idToken         String?
+  password        String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@unique([providerId, accountId])
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  token     String   @unique
+  expiresAt DateTime
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Verification {
+  id         String   @id @default(cuid())
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([identifier, value])
+}
+
+model Category {
+  id        String    @id @default(cuid())
+  name      String
+  userId    String
+  user      User      @relation(fields: [userId], references: [id])
+  snippets  Snippet[]
+  createdAt DateTime  @default(now())
+}
+
+model Tag {
+  id       String       @id @default(cuid())
+  name     String
+  snippets SnippetTag[]
+}
+
+model Snippet {
+  id         String       @id @default(cuid())
+  title      String
+  content    String       @db.Text
+  categoryId String
+  category   Category     @relation(fields: [categoryId], references: [id])
+  userId     String
+  user       User         @relation(fields: [userId], references: [id])
+  tags       SnippetTag[]
+  isFavorite Boolean      @default(false)
+  isDeleted  Boolean      @default(false)
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+}
+
+model SnippetTag {
+  snippetId String
+  tagId     String
+  snippet   Snippet @relation(fields: [snippetId], references: [id], onDelete: Cascade)
+  tag       Tag     @relation(fields: [tagId], references: [id], onDelete: Cascade)
+  @@id([snippetId, tagId])
+}
+
+model Note {
+  id        String   @id @default(cuid())
+  content   String   @db.Text
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+}
