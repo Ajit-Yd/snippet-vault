@@ -6,9 +6,6 @@ import { CreateSnippetDialog } from "@/components/snippets/create-snippet-dialog
 import { SnippetCard } from "@/components/snippets/snippet-card";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import { LandingHeader } from "@/components/layout/landing-header";
-
-<LandingHeader />
 
 interface DashboardPageProps {
   searchParams: Promise<{ q?: string; scope?: string }>;
