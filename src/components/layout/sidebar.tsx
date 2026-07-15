@@ -29,7 +29,7 @@ export async function Sidebar() {
       </div>
 
       <nav className="flex-1 space-y-1 overflow-y-auto p-3">
-        <NavItem href="/" icon={<LayoutGrid className="h-4 w-4" />} label="All Snippets" />
+        <NavItem href="/dashboard" icon={<LayoutGrid className="h-4 w-4" />} label="All Snippets" />
         <NavItem href="/favorites" icon={<Heart className="h-4 w-4" />} label="Favorites" />
         <NavItem href="/recent" icon={<Clock className="h-4 w-4" />} label="Recent" />
         <NavItem href="/index" icon={<List className="h-4 w-4" />} label="Index" />
