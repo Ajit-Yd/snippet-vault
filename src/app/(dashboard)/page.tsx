@@ -6,6 +6,7 @@ import { CreateSnippetDialog } from "@/components/snippets/create-snippet-dialog
 import { SnippetCard } from "@/components/snippets/snippet-card";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
+export const dynamic = "force-dynamic";
 
 interface DashboardPageProps {
   searchParams: Promise<{ q?: string; scope?: string }>;

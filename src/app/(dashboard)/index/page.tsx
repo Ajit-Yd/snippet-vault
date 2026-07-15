@@ -2,6 +2,7 @@ import Link from "next/link";
 import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
 import { getNumberedHeadings } from "@/lib/index-numbering";
+export const dynamic = "force-dynamic";
 
 export default async function IndexPage() {
   const session = await auth.api.getSession({ headers: await headers() });

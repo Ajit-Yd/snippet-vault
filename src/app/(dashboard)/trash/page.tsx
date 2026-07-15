@@ -2,6 +2,7 @@ import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { TrashItem } from "./trash-item";
+export const dynamic = "force-dynamic";
 
 export default async function TrashPage() {
   const session = await auth.api.getSession({ headers: await headers() });
